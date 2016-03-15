@@ -12,4 +12,4 @@ git add .
 git commit -m "提交说明"
 git remote add origin git@... github//仓库地址
 git push -u origin master //所要提交的支干名
-git clone -b <branch> //直接克隆分支
+git clone -b <> //直接克隆分支
