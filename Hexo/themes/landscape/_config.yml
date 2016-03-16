@@ -1,7 +1,7 @@
 # Header #站点右上角导航栏，暂时默认，后面介绍修改
 menu:
-  Home: /
-  Archives: /archives
+  主页: /
+  文章: /archives
 rss: /atom.xml
 
 # Content #替换为中文

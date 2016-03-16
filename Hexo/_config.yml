@@ -4,9 +4,9 @@
 
 # Site
 title: zJiaC #站点名，站点左上角
-subtitle: #副标题，站点左上角
+subtitle: 最难的是坚持，最怕的却是习惯. #副标题，站点左上角
 description: #给搜索引擎看的，对站点的描述，可以自定义
-author: John Doe #在站点左下角可以看到
+author: zJiaC #在站点左下角可以看到
 language: zh-CN #中文
 timezone:
 
@@ -18,35 +18,35 @@ permalink: :year/:month/:day/:title/
 permalink_defaults:
 
 # Directory
-source_dir: source
-public_dir: public
-tag_dir: tags
-archive_dir: archives
-category_dir: categories
-code_dir: downloads/code
-i18n_dir: :lang
-skip_render:
+source_dir: source #资源文件夹，这个文件夹用来存放内容
+public_dir: public #公共文件夹，这个文件夹用于存放生成的站点文件
+tag_dir: tags #标签文件夹
+archive_dir: archives #归档文件夹
+category_dir: categories #分类文件夹
+code_dir: downloads/code #Include code 文件夹
+i18n_dir: :lang #国际化文件夹
+skip_render: #跳过指定文件的渲染，您可使用 glob 来配置路径
 
 # Writing 文章布局、写作格式的定义，不修改
-new_post_name: :title.md # File name of new posts
-default_layout: post
+new_post_name: :title.md # File name of new posts # 新文章的文件名称
+default_layout: post #默认布局
 titlecase: false # Transform title into titlecase
 external_link: true # Open external links in new tab
-filename_case: 0
-render_drafts: false
-post_asset_folder: false
-relative_link: false
+filename_case: 0  
+render_drafts: false #显示草稿
+post_asset_folder: false #是否启动资源文件夹
+relative_link: false #把链接改为与根目录的相对位址
 future: true
-highlight:
+highlight:  #代码块的设置
   enable: true
   line_number: true
   auto_detect: false
   tab_replace:
 
-# Category & Tag
-default_category: uncategorized
-category_map:
-tag_map:
+# Category & Tag 分类 & 标签
+default_category: uncategorized #默认分类
+category_map:  #分类别名
+tag_map:       #标签别名
 
 # Date / Time format 日期格式，不修改
 ## Hexo uses Moment.js to parse and display date
