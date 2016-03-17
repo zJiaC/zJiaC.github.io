@@ -1,8 +1,9 @@
 # Header #站点右上角导航栏，暂时默认，后面介绍修改
 menu:
   主页: /
-  文章: /archives
+  所有文章: /archives
 rss: /atom.xml
+
 
 # Content #替换为中文
 excerpt_link: 阅读全文
