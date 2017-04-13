@@ -63,7 +63,7 @@ pagination_dir: page
 # Extensions 里配置站点所用主题和插件，暂默认，后面会介绍怎么修改
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: light
+theme: next
 
 # Deployment 站点部署到github要配置
 ## Docs: https://hexo.io/docs/deployment.html
