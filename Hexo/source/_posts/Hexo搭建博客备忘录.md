@@ -30,7 +30,10 @@ description: 收集和整理如何利用Hexo搭建博客
 # 二、hexo相关
 
 ## (1)相关链接
-* [如何搭建hexo](http://sunwhut.com/2015/10/30/buildBlog/)
+* [如何搭建hexo](http://www.jianshu.com/p/465830080ea9)
+* hexo3: 运行hexo s需要 -- npm install hexo-server --save
+* 且需要运行 npm install
+
 
 # 三、npm相关
 * 起因：
@@ -43,6 +46,8 @@ npm install nrm -g
 nrm ls //查看可以使用的源
 nrm test //测试源的连接时间
 nrm use "源的名字" //切换到指定的源
+* 使用
+gnvm 可以用于管理node版本
 
 # 背景音乐:
 <embed src="http://music.163.com/style/swf/widget.swf?sid=27808044&type=2&auto=1&width=320&height=66" width="340" height="86"  allowNetworking="all"></embed>
