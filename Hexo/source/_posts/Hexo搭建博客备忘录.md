@@ -27,6 +27,9 @@ description: 收集和整理如何利用Hexo搭建博客
 * git push -u origin master //所要提交的支干名
 * git clone -b branch git@.... //直接克隆分支
 
+## (3)vscode使用git
+* 需要在环境path添加 例如D:\*\Git\cmd
+
 # 二、hexo相关
 
 ## (1)相关链接
