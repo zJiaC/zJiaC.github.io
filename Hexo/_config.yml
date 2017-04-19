@@ -7,7 +7,7 @@ title: zJiaC #站点名，站点左上角
 subtitle: 最难的是坚持，最怕的却是习惯. #副标题，站点左上角
 description: #给搜索引擎看的，对站点的描述，可以自定义
 author: zJiaC #在站点左下角可以看到
-language: zh-CN #中文
+language: zh-Hans #中文
 timezone:
 
 # URL #这项暂时不配置，绑定域名后，欲创建sitemap.xml需要配置该项
