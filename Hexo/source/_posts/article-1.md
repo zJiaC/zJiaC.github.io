@@ -2,6 +2,7 @@
 title: java webservice如何配置安全性问题
 date: 2017-05-18 10:36:18
 tags: [Java]
+categories: [Java]
 ---
 
 # Web Service基本概念
