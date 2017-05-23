@@ -25,6 +25,9 @@ categories: [Java]
 * 对接接口时抛出wsse的安全问题
   解决的办法 [java使用Message Handler修改WebService客户端的SOAP头](http://outofmemory.cn/code-snippet/2344/java-usage-Message-Handler-modify-WebService-customer-duan-SOAP-tou)
 
+* 若是用vpn调试则需使用
+  -Djava.net.preferIPv4Stack=true    
+
 # 备注
 
-* java自带工具，可以使用命令行wsimport构建WebService客户端
+* java自带工具，可以使用命令行wsimport构建WebService客户端,需要注意的一点生成代码时需要指定编码格式，否则获取数据会出现乱码导致无法解析.
