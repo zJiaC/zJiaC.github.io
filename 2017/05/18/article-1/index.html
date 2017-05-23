@@ -94,7 +94,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/05/18/article-1/index.html">
 <meta property="og:site_name" content="zJiaC">
 <meta property="og:description" content="Web Service基本概念 Web Service也叫XML Web Service WebService是一种可以接收从Internet或者Intranet上的其它系统中传递过来的请求，轻量级的独立的通讯技术。是:通过SOAP在Web上提供的软件服务，使用WSDL文件进行说明，并通过UDDI进行注册。">
-<meta property="og:updated_time" content="2017-05-18T02:59:02.558Z">
+<meta property="og:updated_time" content="2017-05-23T02:36:38.880Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java webservice如何配置安全性问题">
 <meta name="twitter:description" content="Web Service基本概念 Web Service也叫XML Web Service WebService是一种可以接收从Internet或者Intranet上的其它系统中传递过来的请求，轻量级的独立的通讯技术。是:通过SOAP在Web上提供的软件服务，使用WSDL文件进行说明，并通过UDDI进行注册。">
@@ -297,6 +297,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -337,10 +359,13 @@
 </li>
 </ul>
 <h1 id="问题及解决办法"><a href="#问题及解决办法" class="headerlink" title="问题及解决办法"></a>问题及解决办法</h1><ul>
-<li>对接接口时抛出wsse的安全问题<br>解决的办法 <a href="http://outofmemory.cn/code-snippet/2344/java-usage-Message-Handler-modify-WebService-customer-duan-SOAP-tou" target="_blank" rel="external">java使用Message Handler修改WebService客户端的SOAP头</a></li>
+<li><p>对接接口时抛出wsse的安全问题<br>解决的办法 <a href="http://outofmemory.cn/code-snippet/2344/java-usage-Message-Handler-modify-WebService-customer-duan-SOAP-tou" target="_blank" rel="external">java使用Message Handler修改WebService客户端的SOAP头</a></p>
+</li>
+<li><p>若是用vpn调试则需使用<br>-Djava.net.preferIPv4Stack=true    </p>
+</li>
 </ul>
 <h1 id="备注"><a href="#备注" class="headerlink" title="备注"></a>备注</h1><ul>
-<li>java自带工具，可以使用命令行wsimport构建WebService客户端</li>
+<li>java自带工具，可以使用命令行wsimport构建WebService客户端,需要注意的一点生成代码时需要指定编码格式，否则获取数据会出现乱码导致无法解析.</li>
 </ul>
 
       
@@ -383,6 +408,10 @@
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/23/article-2/" rel="next" title="唱吧获取mp3下载地址">
+                <i class="fa fa-chevron-left"></i> 唱吧获取mp3下载地址
+              </a>
             
           </div>
 
@@ -487,7 +516,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -498,7 +527,7 @@
             
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
@@ -509,7 +538,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
