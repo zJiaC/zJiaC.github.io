@@ -94,7 +94,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/05/18/article-1/index.html">
 <meta property="og:site_name" content="zJiaC">
 <meta property="og:description" content="Web Service基本概念 Web Service也叫XML Web Service WebService是一种可以接收从Internet或者Intranet上的其它系统中传递过来的请求，轻量级的独立的通讯技术。是:通过SOAP在Web上提供的软件服务，使用WSDL文件进行说明，并通过UDDI进行注册。">
-<meta property="og:updated_time" content="2017-05-23T02:36:38.880Z">
+<meta property="og:updated_time" content="2017-06-23T07:20:18.309Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java webservice如何配置安全性问题">
 <meta name="twitter:description" content="Web Service基本概念 Web Service也叫XML Web Service WebService是一种可以接收从Internet或者Intranet上的其它系统中传递过来的请求，轻量级的独立的通讯技术。是:通过SOAP在Web上提供的软件服务，使用WSDL文件进行说明，并通过UDDI进行注册。">
@@ -361,8 +361,143 @@
 <h1 id="问题及解决办法"><a href="#问题及解决办法" class="headerlink" title="问题及解决办法"></a>问题及解决办法</h1><ul>
 <li><p>对接接口时抛出wsse的安全问题<br>解决的办法 <a href="http://outofmemory.cn/code-snippet/2344/java-usage-Message-Handler-modify-WebService-customer-duan-SOAP-tou" target="_blank" rel="external">java使用Message Handler修改WebService客户端的SOAP头</a></p>
 </li>
-<li><p>若是用vpn调试则需使用<br>-Djava.net.preferIPv4Stack=true    </p>
+<li><p>在调用webService时，有时候需要在SOAP头中插入信息，比如鉴权信息。</p>
+<p>  下面的例子演示如何设置给WebService设置授权信息。</p>
+<p>  首先我们需要实现SOAPHandler接口的类，这个类决定了要调用那些Handler，以什么顺序调用。</p>
+<p>  最后我们需要给WebService的客户端添加HandlerResolver类实例.</p>
+<p>  默认情况下SOAP头是空的：</p>
 </li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">S:Header</span>&gt;</span></div><div class="line">     <span class="tag">&lt;<span class="name">wsse:Security</span> <span class="attr">xmlns:wsse</span>=<span class="string">"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"</span>&gt;</span>                              </div><div class="line">          <span class="tag">&lt;<span class="name">wsse:UsernameToken</span> <span class="attr">xmlns:wsu</span>=<span class="string">"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"</span>&gt;</span>                              </div><div class="line">               <span class="tag">&lt;<span class="name">wsse:Username</span>&gt;</span>TestUser<span class="tag">&lt;/<span class="name">wsse:Username</span>&gt;</span></div><div class="line">               <span class="tag">&lt;<span class="name">wsse:Password</span> <span class="attr">Type</span>=<span class="string">"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText"</span>&gt;</span>TestPassword<span class="tag">&lt;/<span class="name">wsse:Password</span>&gt;</span></div><div class="line">          <span class="tag">&lt;/<span class="name">wsse:UsernameToken</span>&gt;</span></div><div class="line">     <span class="tag">&lt;/<span class="name">wsse:Security</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">S:Header</span>&gt;</span></div><div class="line">如下是SOAPHandler<span class="tag">&lt;<span class="name">SOAPMessageContext</span>&gt;</span>的实现，这里有好多方法可以实现，但在这里我们仅需要实现handleMessage()方法。</div></pre></td></tr></table></figure>
+<pre><code class="java"><span class="keyword">package</span> cn.outofmemory.ws.example;
+
+<span class="keyword">import</span> java.util.Set;
+<span class="keyword">import</span> javax.xml.namespace.QName;
+<span class="keyword">import</span> javax.xml.soap.SOAPElement;
+<span class="keyword">import</span> javax.xml.soap.SOAPEnvelope;
+<span class="keyword">import</span> javax.xml.soap.SOAPHeader;
+<span class="keyword">import</span> javax.xml.soap.SOAPMessage;
+<span class="keyword">import</span> javax.xml.ws.handler.MessageContext;
+<span class="keyword">import</span> javax.xml.ws.handler.soap.SOAPHandler;
+<span class="keyword">import</span> javax.xml.ws.handler.soap.SOAPMessageContext;
+
+<span class="comment">/**
+ *
+ * <span class="doctag">@author</span> outofmemory.cn
+ */</span>
+<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HeaderHandler</span> <span class="keyword">implements</span> <span class="title">SOAPHandler</span>&lt;<span class="title">SOAPMessageContext</span>&gt; </span>{
+
+    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">handleMessage</span><span class="params">(SOAPMessageContext smc)</span> </span>{
+
+        Boolean outboundProperty = (Boolean) smc.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
+
+        <span class="keyword">if</span> (outboundProperty.booleanValue()) {
+
+            SOAPMessage message = smc.getMessage();
+
+            <span class="keyword">try</span> {
+
+                SOAPEnvelope envelope = smc.getMessage().getSOAPPart().getEnvelope();
+                SOAPHeader header = envelope.addHeader();
+
+                SOAPElement security =
+                        header.addChildElement(<span class="string">"Security"</span>, <span class="string">"wsse"</span>, <span class="string">"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"</span>);
+
+                SOAPElement usernameToken =
+                        security.addChildElement(<span class="string">"UsernameToken"</span>, <span class="string">"wsse"</span>);
+                usernameToken.addAttribute(<span class="keyword">new</span> QName(<span class="string">"xmlns:wsu"</span>), <span class="string">"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"</span>);
+
+                SOAPElement username =
+                        usernameToken.addChildElement(<span class="string">"Username"</span>, <span class="string">"wsse"</span>);
+                username.addTextNode(<span class="string">"TestUser"</span>);
+
+                SOAPElement password =
+                        usernameToken.addChildElement(<span class="string">"Password"</span>, <span class="string">"wsse"</span>);
+                password.setAttribute(<span class="string">"Type"</span>, <span class="string">"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText"</span>);
+               password.addTextNode(<span class="string">"TestPassword"</span>);
+
+                <span class="comment">//Print out the outbound SOAP message to System.out</span>
+                message.writeTo(System.out);
+                System.out.println(<span class="string">""</span>);
+
+            } <span class="keyword">catch</span> (Exception e) {
+                e.printStackTrace();
+            }
+
+        } <span class="keyword">else</span> {
+            <span class="keyword">try</span> {
+
+                <span class="comment">//This handler does nothing with the response from the Web Service so</span>
+                <span class="comment">//we just print out the SOAP message.</span>
+                SOAPMessage message = smc.getMessage();
+                message.writeTo(System.out);
+                System.out.println(<span class="string">""</span>);
+
+            } <span class="keyword">catch</span> (Exception ex) {
+                ex.printStackTrace();
+            } 
+        }
+
+        <span class="keyword">return</span> outboundProperty;
+
+    }
+
+    <span class="function"><span class="keyword">public</span> Set <span class="title">getHeaders</span><span class="params">()</span> </span>{
+        <span class="comment">//throw new UnsupportedOperationException("Not supported yet.");</span>
+        <span class="keyword">return</span> <span class="keyword">null</span>;
+    }
+
+    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">handleFault</span><span class="params">(SOAPMessageContext context)</span> </span>{
+        <span class="comment">//throw new UnsupportedOperationException("Not supported yet.");</span>
+        <span class="keyword">return</span> <span class="keyword">true</span>;
+    }
+
+    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">close</span><span class="params">(MessageContext context)</span> </span>{
+    <span class="comment">//throw new UnsupportedOperationException("Not supported yet.");</span>
+    }
+}
+如下是HandlerResolver的实现类定义：
+
+<span class="keyword">package</span> cn.outofmemory.ws.example;
+
+<span class="keyword">import</span> java.util.ArrayList;
+<span class="keyword">import</span> java.util.List;
+<span class="keyword">import</span> javax.xml.ws.handler.Handler;
+<span class="keyword">import</span> javax.xml.ws.handler.HandlerResolver;
+<span class="keyword">import</span> javax.xml.ws.handler.PortInfo;
+
+<span class="comment">/**
+ *
+ * <span class="doctag">@author</span> outofmemory.cn
+ */</span>
+<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HeaderHandlerResolver</span> <span class="keyword">implements</span> <span class="title">HandlerResolver</span> </span>{
+
+<span class="function"><span class="keyword">public</span> List&lt;Handler&gt; <span class="title">getHandlerChain</span><span class="params">(PortInfo portInfo)</span> </span>{
+      List&lt;Handler&gt; handlerChain = <span class="keyword">new</span> ArrayList&lt;Handler&gt;();
+
+      HeaderHandler hh = <span class="keyword">new</span> HeaderHandler();
+
+      handlerChain.add(hh);
+
+      <span class="keyword">return</span> handlerChain;
+   }
+}
+下面是调用webService的代码：
+
+   JavadbWebServiceService service = <span class="keyword">new</span> JavadbWebServiceService();
+
+   HeaderHandlerResolver handlerResolver = <span class="keyword">new</span> HeaderHandlerResolver();
+   service.setHandlerResolver(handlerResolver);
+
+   JavadbWebService port = service.getJavadbWebServicePort();
+
+   <span class="comment">//调用web service</span>
+   String currentTime = port.getTime();
+
+   System.out.println(<span class="string">"Current time is: "</span> + currentTime);
+</code></pre>
+<ul>
+<li>若是用vpn调试则需使用<br>-Djava.net.preferIPv4Stack=true    </li>
 </ul>
 <h1 id="备注"><a href="#备注" class="headerlink" title="备注"></a>备注</h1><ul>
 <li>java自带工具，可以使用命令行wsimport构建WebService客户端,需要注意的一点生成代码时需要指定编码格式，否则获取数据会出现乱码导致无法解析.</li>
