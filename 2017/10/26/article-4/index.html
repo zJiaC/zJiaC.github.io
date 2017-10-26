@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Java,Spring boot," />
 
 
 
@@ -87,12 +87,17 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="zJiaC">
-<meta property="og:url" content="http://yoursite.com/page/2/index.html">
+<meta name="description" content="使用自定义Job Factory，用于Spring注入">
+<meta name="keywords" content="Java,Spring boot">
+<meta property="og:type" content="article">
+<meta property="og:title" content="解决Spring boot项目quartz的job没法使用注解方式实例化对象">
+<meta property="og:url" content="http://yoursite.com/2017/10/26/article-4/index.html">
 <meta property="og:site_name" content="zJiaC">
+<meta property="og:description" content="使用自定义Job Factory，用于Spring注入">
+<meta property="og:updated_time" content="2017-10-26T08:38:36.198Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="zJiaC">
+<meta name="twitter:title" content="解决Spring boot项目quartz的job没法使用注解方式实例化对象">
+<meta name="twitter:description" content="使用自定义Job Factory，用于Spring注入">
 
 
 
@@ -120,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/page/2/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/10/26/article-4/"/>
 
 
 
 
 
-  <title> zJiaC </title>
+  <title> 解决Spring boot项目quartz的job没法使用注解方式实例化对象 | zJiaC </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -151,9 +156,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-   page-home 
- ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -236,9 +239,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -247,7 +250,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/06/13/计划/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/26/article-4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zJiaC">
@@ -268,10 +271,7 @@
             
             
               
-                
-                <a class="post-title-link" href="/2016/06/13/计划/" itemprop="url">
-                  计划
-                </a>
+                解决Spring boot项目quartz的job没法使用注解方式实例化对象
               
             
           </h1>
@@ -286,8 +286,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-06-13T21:58:44+08:00">
-                2016-06-13
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-26T16:19:45+08:00">
+                2017-10-26
               </time>
             
 
@@ -309,8 +309,19 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/日常/" itemprop="url" rel="index">
-                    <span itemprop="name">日常</span>
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/Spring-boot/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring boot</span>
                   </a>
                 </span>
 
@@ -344,344 +355,104 @@
       
 
       
+        <p>使用自定义Job Factory，用于Spring注入</p>
+<a id="more"></a>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Component</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CustomJobFactory</span> <span class="keyword">extends</span> <span class="title">AdaptableJobFactory</span> </span>&#123;</div><div class="line">  <span class="meta">@Autowired</span></div><div class="line">  <span class="keyword">private</span> AutowireCapableBeanFactory capableBeanFactory;</div><div class="line"></div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">protected</span> Object <span class="title">createJobInstance</span><span class="params">(TriggerFiredBundle bundle)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">    <span class="comment">// 调用父类的方法</span></div><div class="line">    Object jobInstance = <span class="keyword">super</span>.createJobInstance(bundle);</div><div class="line">    <span class="comment">// 进行注入</span></div><div class="line">    capableBeanFactory.autowireBean(jobInstance);</div><div class="line">    <span class="keyword">return</span> jobInstance;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@Configuration</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">QuartzConfig</span> </span>&#123;</div><div class="line"></div><div class="line">  ...</div><div class="line"></div><div class="line">  <span class="meta">@Bean</span></div><div class="line">  <span class="function"><span class="keyword">public</span> SchedulerFactoryBean <span class="title">schedulerFactoryBean</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</div><div class="line">    schedulerFactory = <span class="keyword">new</span> SchedulerFactoryBean();</div><div class="line"></div><div class="line">    schedulerFactory.setOverwriteExistingJobs(<span class="keyword">true</span>);</div><div class="line"></div><div class="line">    <span class="comment">// 延时启动</span></div><div class="line">    schedulerFactory.setStartupDelay(<span class="number">20</span>);</div><div class="line"></div><div class="line">    <span class="comment">// 加载quartz数据源配置</span></div><div class="line">    schedulerFactory.setQuartzProperties(quartzProperties());</div><div class="line"></div><div class="line">    <span class="comment">// 自定义Job Factory，用于Spring注入</span></div><div class="line">    schedulerFactory.setJobFactory(customJobFactory);</div><div class="line"></div><div class="line">    <span class="keyword">return</span> schedulerFactory;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+      
+    </div>
+
+    <div>
+      
         
-          记录自己要学习的计划及进度
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2016/06/13/计划/">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+
+      
+    </div>
+
+    <div>
+      
         
+
       
     </div>
 
     <div>
       
-    </div>
+        
 
-    <div>
-      
-    </div>
-
-    <div>
       
     </div>
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/03/23/Chrome相关/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zJiaC">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="zJiaC">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/03/23/Chrome相关/" itemprop="url">
-                  Chrome相关
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-03-23T20:11:03+08:00">
-                2016-03-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Chrome/" itemprop="url" rel="index">
-                    <span itemprop="name">Chrome</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
+            <a href="/tags/Java/" rel="tag"># Java</a>
           
-
+            <a href="/tags/Spring-boot/" rel="tag"># Spring boot</a>
           
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
         
-          
-            <p>今天遇到一个奇怪的事情，电脑不小心重启了，之后Chrome突然什么都打不开包括设置也打不开。<br>网上搜了一下需要在右键属性-目标空一格添加 “-no-sandbox”才能正常使用.</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
       
 
       
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/03/16/Hexo搭建博客备忘录/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zJiaC">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="zJiaC">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/10/26/article-5/" rel="next" title="解决spring boot项目多个类implements于同一个接口类，使用注解需要多个@Qualifier">
+                <i class="fa fa-chevron-left"></i> 解决spring boot项目多个类implements于同一个接口类，使用注解需要多个@Qualifier
+              </a>
             
-              
-                
-                <a class="post-title-link" href="/2016/03/16/Hexo搭建博客备忘录/" itemprop="url">
-                  Hexo搭建博客备忘录
-                </a>
-              
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
             
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+              <a href="/2017/08/22/article-3/" rel="prev" title="Spring boot项目出现跨域问题">
+                Spring boot项目出现跨域问题 <i class="fa fa-chevron-right"></i>
+              </a>
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-03-16T20:59:40+08:00">
-                2016-03-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Hexo/" itemprop="url" rel="index">
-                    <span itemprop="name">Hexo</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          收集和整理如何利用Hexo搭建博客
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2016/03/16/Hexo搭建博客备忘录/">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
-    
-  </section>
 
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
-  </nav>
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
 
+      
+    </div>
+  </div>
 
 
           </div>
@@ -689,6 +460,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -896,6 +671,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
 
   
 
