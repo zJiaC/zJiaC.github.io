@@ -1,8 +1,8 @@
 ---
 title: 日常经验备忘录
 date: 2018-03-13 15:46:37
-tags: [Hexo,备忘录]
-categories: [Hexo]
+tags: [日常,备忘录]
+categories: [日常]
 ---
 
 # 记录个人常用的命令行指令、常用工具等：
