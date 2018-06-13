@@ -367,7 +367,7 @@
 
       
         
-          <p>#发现错误过程<br>在开发spring-boot整合druid链接池(1.1.2版本)的项目时，同事再开发的时候碰到了，connection holder is null这样一个错误。<br>帮助其解决时通过google发现可能是druid出现的错误。<br>但按照网上所说只要配置这几个参数：<br>配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒<br>timeBetweenEvictionRunsMillis<br>配置一个连接在池中最小生存的时间，单位是毫秒<br>minEvictableIdleTimeMillis<br>关闭长时间不使用的连接超时时间，单位秒<br>removeAbandonedTimeout<br>关闭长时间不使用的连接<br>removeAbandoned<br>实际上并不起作用。<br>
+          <h1 id="发现错误过程"><a href="#发现错误过程" class="headerlink" title="发现错误过程"></a>发现错误过程</h1><p>在开发spring-boot整合druid链接池(1.1.2版本)的项目时，同事再开发的时候碰到了，connection holder is null这样一个错误。<br>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/06/13/article-8/#more" rel="contents">

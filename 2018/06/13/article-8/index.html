@@ -87,17 +87,17 @@
 
 
 
-<meta name="description" content="#发现错误过程在开发spring-boot整合druid链接池(1.1.2版本)的项目时，同事再开发的时候碰到了，connection holder is null这样一个错误。帮助其解决时通过google发现可能是druid出现的错误。但按照网上所说只要配置这几个参数：配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒timeBetweenEvictionRunsMillis配置一个">
+<meta name="description" content="发现错误过程在开发spring-boot整合druid链接池(1.1.2版本)的项目时，同事再开发的时候碰到了，connection holder is null这样一个错误。">
 <meta name="keywords" content="Java,Spring boot,druid">
 <meta property="og:type" content="article">
 <meta property="og:title" content="connection holder is null">
 <meta property="og:url" content="http://yoursite.com/2018/06/13/article-8/index.html">
 <meta property="og:site_name" content="zJiaC">
-<meta property="og:description" content="#发现错误过程在开发spring-boot整合druid链接池(1.1.2版本)的项目时，同事再开发的时候碰到了，connection holder is null这样一个错误。帮助其解决时通过google发现可能是druid出现的错误。但按照网上所说只要配置这几个参数：配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒timeBetweenEvictionRunsMillis配置一个">
-<meta property="og:updated_time" content="2018-06-13T05:59:04.279Z">
+<meta property="og:description" content="发现错误过程在开发spring-boot整合druid链接池(1.1.2版本)的项目时，同事再开发的时候碰到了，connection holder is null这样一个错误。">
+<meta property="og:updated_time" content="2018-06-13T06:02:28.458Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="connection holder is null">
-<meta name="twitter:description" content="#发现错误过程在开发spring-boot整合druid链接池(1.1.2版本)的项目时，同事再开发的时候碰到了，connection holder is null这样一个错误。帮助其解决时通过google发现可能是druid出现的错误。但按照网上所说只要配置这几个参数：配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒timeBetweenEvictionRunsMillis配置一个">
+<meta name="twitter:description" content="发现错误过程在开发spring-boot整合druid链接池(1.1.2版本)的项目时，同事再开发的时候碰到了，connection holder is null这样一个错误。">
 
 
 
@@ -366,7 +366,7 @@
       
 
       
-        <p>#发现错误过程<br>在开发spring-boot整合druid链接池(1.1.2版本)的项目时，同事再开发的时候碰到了，connection holder is null这样一个错误。<br>帮助其解决时通过google发现可能是druid出现的错误。<br>但按照网上所说只要配置这几个参数：<br>配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒<br>timeBetweenEvictionRunsMillis<br>配置一个连接在池中最小生存的时间，单位是毫秒<br>minEvictableIdleTimeMillis<br>关闭长时间不使用的连接超时时间，单位秒<br>removeAbandonedTimeout<br>关闭长时间不使用的连接<br>removeAbandoned<br>实际上并不起作用。<br><a id="more"></a><br>最后发现这篇博文：</p>
+        <h1 id="发现错误过程"><a href="#发现错误过程" class="headerlink" title="发现错误过程"></a>发现错误过程</h1><p>在开发spring-boot整合druid链接池(1.1.2版本)的项目时，同事再开发的时候碰到了，connection holder is null这样一个错误。<br><a id="more"></a><br>帮助其解决时通过google发现可能是druid出现的错误。<br>但按照网上所说只要配置这几个参数：<br>配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒<br>timeBetweenEvictionRunsMillis<br>配置一个连接在池中最小生存的时间，单位是毫秒<br>minEvictableIdleTimeMillis<br>关闭长时间不使用的连接超时时间，单位秒<br>removeAbandonedTimeout<br>关闭长时间不使用的连接<br>removeAbandoned<br>实际上并不起作用。<br>最后发现这篇博文：</p>
 <ul>
 <li><a href="http://timerbin.iteye.com/blog/2332995" target="_blank" rel="external">connection holder is null</a><br>发现确实是由多数据源，开启事务导致了这个错误,且未配置单独的事务管理器，所以也没指定那个事务管理器。<br>然后通过阅读源码：<br>一开始创建连接会实例化ConnectionHolder<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Connection <span class="title">getConnection</span><span class="params">(DataSource dataSource)</span> <span class="keyword">throws</span> CannotGetJdbcConnectionException </span>&#123;</div><div class="line">  <span class="keyword">try</span> &#123;</div><div class="line">    <span class="keyword">return</span> doGetConnection(dataSource);</div><div class="line">  &#125; <span class="keyword">catch</span> (SQLException var2) &#123;</div><div class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> CannotGetJdbcConnectionException(<span class="string">"Could not get JDBC Connection"</span>, var2);</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Connection <span class="title">doGetConnection</span><span class="params">(DataSource dataSource)</span> <span class="keyword">throws</span> SQLException </span>&#123;</div><div class="line">  Assert.notNull(dataSource, <span class="string">"No DataSource specified"</span>);</div><div class="line">  ConnectionHolder conHolder = (ConnectionHolder)TransactionSynchronizationManager.getResource(dataSource);</div><div class="line">  <span class="keyword">if</span> (conHolder == <span class="keyword">null</span> || !conHolder.hasConnection() &amp;&amp; !conHolder.isSynchronizedWithTransaction()) &#123;</div><div class="line">    logger.debug(<span class="string">"Fetching JDBC Connection from DataSource"</span>);</div><div class="line">    Connection con = dataSource.getConnection();</div><div class="line">    <span class="keyword">if</span> (TransactionSynchronizationManager.isSynchronizationActive()) &#123;</div><div class="line">      logger.debug(<span class="string">"Registering transaction synchronization for JDBC Connection"</span>);</div><div class="line">      ConnectionHolder holderToUse = conHolder;</div><div class="line">      <span class="keyword">if</span> (conHolder == <span class="keyword">null</span>) &#123;</div><div class="line">        holderToUse = <span class="keyword">new</span> ConnectionHolder(con);</div><div class="line">      &#125; <span class="keyword">else</span> &#123;</div><div class="line">        conHolder.setConnection(con);</div><div class="line">      &#125;</div><div class="line"></div><div class="line">      holderToUse.requested();</div><div class="line">      TransactionSynchronizationManager.registerSynchronization(<span class="keyword">new</span> DataSourceUtils.ConnectionSynchronization(holderToUse, dataSource));</div><div class="line">      holderToUse.setSynchronizedWithTransaction(<span class="keyword">true</span>);</div><div class="line">      <span class="keyword">if</span> (holderToUse != conHolder) &#123;</div><div class="line">        TransactionSynchronizationManager.bindResource(dataSource, holderToUse);</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> con;</div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    conHolder.requested();</div><div class="line">    <span class="keyword">if</span> (!conHolder.hasConnection()) &#123;</div><div class="line">      logger.debug(<span class="string">"Fetching resumed JDBC Connection from DataSource"</span>);</div><div class="line">      conHolder.setConnection(dataSource.getConnection());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> conHolder.getConnection();</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </li>
@@ -499,8 +499,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.jpg"
@@ -573,6 +582,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#发现错误过程"><span class="nav-number">1.</span> <span class="nav-text">发现错误过程</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
