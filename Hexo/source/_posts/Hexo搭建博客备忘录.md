@@ -16,8 +16,9 @@ description: 收集和整理如何利用Hexo搭建博客
 # 一、git常用的命令及其如何生成ssh key
 
 ## (1)相关链接
-* [如何生成ssh](http://riny.net/2014/git-ssh-key/)
-* [git简单用法指南](http://rogerdudler.github.io/git-guide/index.zh.html)
+> [如何生成ssh](http://wiki.jikexueyuan.com/project/git-tutorial/remote-repository.html)
+
+> [GIT简单用法指南](http://rogerdudler.github.io/git-guide/index.zh.html)
 
 ## (2)个人常用git命令总结
 * git init
@@ -34,7 +35,7 @@ description: 收集和整理如何利用Hexo搭建博客
 # 二、hexo相关
 
 ## (1)相关链接
-* [如何搭建hexo](http://www.jianshu.com/p/465830080ea9)
+> [如何搭建hexo](http://www.jianshu.com/p/465830080ea9)
 * hexo3: 运行hexo s需要 -- npm install hexo-server --save
 * 且需要运行 npm install
 
