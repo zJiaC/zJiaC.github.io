@@ -1685,7 +1685,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #81e509;
+  background: #3786c4;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -2853,4 +2853,11 @@ pre .javascript .function {
   .post-body {
     text-align: justify;
   }
+}
+body {
+  background: url("/images/cloud.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: 0% 100%;
+  background-size: cover;
 }
