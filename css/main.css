@@ -1685,7 +1685,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ffa712;
+  background: #c99437;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -2856,7 +2856,7 @@ pre .javascript .function {
 }
 body {
   background-image: url("/images/cloud.jpg");
-  background-repeat: no-repeat;
+  background-repeat: repeat;
   background-attachment: fixed;
   background-position: 0% 100%;
   background-size: cover;
