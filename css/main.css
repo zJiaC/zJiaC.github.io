@@ -1685,7 +1685,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #a4fff6;
+  background: #90ff63;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -2854,14 +2854,13 @@ pre .javascript .function {
     text-align: justify;
   }
 }
-@media screen and (min-width: 1200px) {
-  body {
-    background-image: url("/images/cloud.jpg");
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: 50% 50%;
-  }
-  #footer a {
-    color: #eee;
-  }
+body {
+  background-image: url("/images/cloud.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: 100% 100%;
+  background-size: cover;
+}
+#footer a {
+  color: #eee;
 }
