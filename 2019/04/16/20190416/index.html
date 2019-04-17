@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Docker,Gitlab,Portainer," />
 
 
 
@@ -87,16 +87,23 @@
 
 
 
-<meta name="keywords">
+<meta name="description" content="前情提要公司内部一直都是用svn。由于项目的加入新成员。代码质量不稳。但项目可能随时要更新。处于管理组员代码方便性考虑，由于公司暂时没考虑环git，暂时在公司内部搭建个gitlab项目组自用。">
+<meta name="keywords" content="Docker,Gitlab,Portainer">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Docker创建Gitlab并同时使用github">
+<meta property="og:title" content="Docker创建本地Gitlab并同时使用Github">
 <meta property="og:url" content="http://yoursite.com/2019/04/16/20190416/index.html">
 <meta property="og:site_name" content="zJiaC">
-<meta property="og:image" content="http://yoursite.com/2019/04/16/20190416/avatar.png">
-<meta property="og:updated_time" content="2019-04-16T09:52:31.552Z">
+<meta property="og:description" content="前情提要公司内部一直都是用svn。由于项目的加入新成员。代码质量不稳。但项目可能随时要更新。处于管理组员代码方便性考虑，由于公司暂时没考虑环git，暂时在公司内部搭建个gitlab项目组自用。">
+<meta property="og:image" content="http://yoursite.com/2019/04/16/20190416/docker_info.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/16/20190416/df-h.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/16/20190416/修改前.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/16/20190416/修改后.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/16/20190416/welcome.png">
+<meta property="og:updated_time" content="2019-04-17T08:04:54.259Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Docker创建Gitlab并同时使用github">
-<meta name="twitter:image" content="http://yoursite.com/2019/04/16/20190416/avatar.png">
+<meta name="twitter:title" content="Docker创建本地Gitlab并同时使用Github">
+<meta name="twitter:description" content="前情提要公司内部一直都是用svn。由于项目的加入新成员。代码质量不稳。但项目可能随时要更新。处于管理组员代码方便性考虑，由于公司暂时没考虑环git，暂时在公司内部搭建个gitlab项目组自用。">
+<meta name="twitter:image" content="http://yoursite.com/2019/04/16/20190416/docker_info.png">
 
 
 
@@ -130,7 +137,7 @@
 
 
 
-  <title> Docker创建Gitlab并同时使用github | zJiaC </title>
+  <title> Docker创建本地Gitlab并同时使用Github | zJiaC </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -270,7 +277,7 @@
             
             
               
-                Docker创建Gitlab并同时使用github
+                Docker创建本地Gitlab并同时使用Github
               
             
           </h1>
@@ -295,6 +302,39 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Docker/" itemprop="url" rel="index">
+                    <span itemprop="name">Docker</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Docker/Gitlab/" itemprop="url" rel="index">
+                    <span itemprop="name">Gitlab</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -321,7 +361,95 @@
       
 
       
-        <img src="/2019/04/16/20190416/avatar.png" alt="测试" title="测试">
+        <h2 id="前情提要"><a href="#前情提要" class="headerlink" title="前情提要"></a>前情提要</h2><p>公司内部一直都是用svn。由于项目的加入新成员。代码质量不稳。但项目可能随时要更新。<br><br>处于管理组员代码方便性考虑，由于公司暂时没考虑环git，暂时在公司内部搭建个gitlab项目组自用。</p>
+<a id="more"></a>
+<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><h3 id="搭建Docker环境"><a href="#搭建Docker环境" class="headerlink" title="搭建Docker环境"></a>搭建Docker环境</h3><blockquote>
+<p><a href="https://juejin.im/post/5a4c9ff36fb9a04507700fcc" target="_blank" rel="external">通过 docker 搭建自用的 gitlab 服务</a></p>
+</blockquote>
+<ul>
+<li>删除旧版本的 docker<blockquote>
+<p>   yum remove docker docker-common docker-selinux docker-engine</p>
+</blockquote>
+</li>
+<li><p>增加 docker yum 源</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">yum install -y yum-utils device-mapper-persistent-data lvm2</div><div class="line">yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo</div><div class="line">yum-config-manager --enable docker-ce-edge</div><div class="line">yum-config-manager --enable docker-ce-test</div></pre></td></tr></table></figure>
+</li>
+<li><p>可直接下载Dokcer最新版</p>
+<blockquote>
+<p>   yum install docker-ce</p>
+</blockquote>
+</li>
+<li>也可查看所有有效版本<blockquote>
+<p>   yum list docker-ce –showduplicates | sort -r</p>
+</blockquote>
+</li>
+<li><p>自定义 docker 配置:graph 定义 docker 运行的目录， registry-mirrors 定义了 docker 获取镜像的仓库的地址。</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">mkdir /etc/docker</div><div class="line">vi /etc/docker/daemon.json</div><div class="line"></div><div class="line">&#123;</div><div class="line">&quot;graph&quot;:&quot;/u1/docker&quot;,</div><div class="line">&quot;registry-mirrors&quot;: [&quot;http://hub-mirror.c.163.com&quot;]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>启动 docker</p>
+<blockquote>
+<p>   systemctl enable docker //设置开机自动启动<br>   systemctl start docker</p>
+</blockquote>
+</li>
+<li>查看 docker信息<blockquote>
+<p>   docker info</p>
+<img src="/2019/04/16/20190416/docker_info.png" alt="docker info" title="docker info">
+</blockquote>
+</li>
+</ul>
+<h3 id="安装-Portainer-–-docker可视化工具"><a href="#安装-Portainer-–-docker可视化工具" class="headerlink" title="安装 Portainer – docker可视化工具"></a>安装 Portainer – docker可视化工具</h3><ul>
+<li>拉取最新镜像<blockquote>
+<p>   docker pull docker.io/portainer/portainer</p>
+</blockquote>
+</li>
+<li>运行  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">docker run -d -p 9000:9000 \</div><div class="line">    --restart=always \</div><div class="line">    -v /var/run/docker.sock:/var/run/docker.sock \</div><div class="line">    --name prtainer-test \</div><div class="line">    docker.io/portainer/portainer</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="安装-Gitlab"><a href="#安装-Gitlab" class="headerlink" title="安装 Gitlab"></a>安装 Gitlab</h3><ul>
+<li>获取最新镜像<blockquote>
+<p>   docker pull gitlab/gitlab-ce:latest</p>
+</blockquote>
+</li>
+<li>查看docker镜像可选择中文镜像<blockquote>
+<p>   docker search gitlab </p>
+</blockquote>
+</li>
+<li>查看磁盘空间大小,选择适合的持久化容器数据的存放位置。<blockquote>
+<p>   df -h</p>
+  <img src="/2019/04/16/20190416/df-h.png" alt="df -h" title="df -h"></blockquote>
+</li>
+<li><p>运行</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">docker run \</div><div class="line">    --restart=always \</div><div class="line">    --publish 4443:443 --publish 8089:80 --publish 2222:22 \</div><div class="line">    --name gitlab \</div><div class="line">    --volume /u1/gitlab-ce/config:/etc/gitlab \</div><div class="line">    --volume /u1/gitlab-ce/logs:/var/log/gitlab \</div><div class="line">    --volume /u1/gitlab-ce/data:/var/opt/gitlab \</div><div class="line">    gitlab/gitlab-ce</div></pre></td></tr></table></figure>
+</li>
+<li><p>修改external_url</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">1. 方法一:</div><div class="line">     cd /u1/gitlab/config/ </div><div class="line">     vi gitlab.rb</div><div class="line">2.  方法二:</div><div class="line">     docker exec it gitlab //进入容器内部</div><div class="line">     cd /etc/gitlab/</div><div class="line">     vi gitlab.rb</div><div class="line">     gitlab-ctl restart</div><div class="line">/external_url --进入编辑模式可通过斜杆搜索,修改成:external_url &apos;http://IP&apos;</div></pre></td></tr></table></figure>
+  <img src="/2019/04/16/20190416/修改前.png" alt="修改前" title="修改前">
+  <img src="/2019/04/16/20190416/修改后.png" alt="修改后" title="修改后">
+</li>
+</ul>
+<h3 id="同时使用Github和本地Gitlab"><a href="#同时使用Github和本地Gitlab" class="headerlink" title="同时使用Github和本地Gitlab"></a>同时使用Github和本地Gitlab</h3><ul>
+<li>生成密钥<h1 id="在-ssh-目录会生成gitlab-id-rsa和gitlab-id-rsa-pub私钥和公钥。我们将gitlab-id-rsa-pub中的内容粘帖到公司GitLab服务器的SSH-key的配置中。"><a href="#在-ssh-目录会生成gitlab-id-rsa和gitlab-id-rsa-pub私钥和公钥。我们将gitlab-id-rsa-pub中的内容粘帖到公司GitLab服务器的SSH-key的配置中。" class="headerlink" title="在~/.ssh/目录会生成gitlab_id-rsa和gitlab_id-rsa.pub私钥和公钥。我们将gitlab_id-rsa.pub中的内容粘帖到公司GitLab服务器的SSH-key的配置中。"></a>在~/.ssh/目录会生成gitlab_id-rsa和gitlab_id-rsa.pub私钥和公钥。我们将gitlab_id-rsa.pub中的内容粘帖到公司GitLab服务器的SSH-key的配置中。</h1><blockquote>
+<p>   $ ssh-keygen -t rsa -C “注册的gitlab邮箱” -f ~/.ssh/gitlab_id-rsa</p>
+</blockquote>
+</li>
+<li>添加config<blockquote>
+<p>   cd ~/.ssh<br>   touch config</p>
+</blockquote>
+</li>
+<li><p>config内容例如：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">Host github.com</div><div class="line">    Port 22</div><div class="line">    User git</div><div class="line">    HostName github.com</div><div class="line">    PreferredAuthentications publickey</div><div class="line">    IdentityFile ~/.ssh/github_id-rsa</div><div class="line">Host gitlab //当指定gitlab则项目的git@IP:test/test.git的IP要相应替换成gitlab</div><div class="line">    Port 2222</div><div class="line">    User git</div><div class="line">    HostName IP</div><div class="line">    PreferredAuthentications publickey</div><div class="line">    IdentityFile ~/.ssh/gitlab_id-rsa</div></pre></td></tr></table></figure>
+</li>
+<li><p>校验是否可以连接成功</p>
+<blockquote>
+<p>   ssh -T git@gitlab</p>
+</blockquote>
+  <img src="/2019/04/16/20190416/welcome.png" alt="welcome" title="welcome"></li>
+<li>项目指定账户和邮箱<blockquote>
+<p>   git config - -local user.name “用户名”<br><br>   git config - -local user.email “邮箱”</p>
+</blockquote>
+</li>
+</ul>
+
       
     </div>
 
@@ -347,6 +475,16 @@
     </div>
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Docker/" rel="tag"># Docker</a>
+          
+            <a href="/tags/Gitlab/" rel="tag"># Gitlab</a>
+          
+            <a href="/tags/Portainer/" rel="tag"># Portainer</a>
+          
+        </div>
       
 
       
@@ -437,8 +575,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.jpg"
@@ -464,7 +611,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">13</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -475,7 +622,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-count">15</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -511,6 +658,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前情提要"><span class="nav-number">1.</span> <span class="nav-text">前情提要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#步骤"><span class="nav-number">2.</span> <span class="nav-text">步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#搭建Docker环境"><span class="nav-number">2.1.</span> <span class="nav-text">搭建Docker环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-Portainer-–-docker可视化工具"><span class="nav-number">2.2.</span> <span class="nav-text">安装 Portainer – docker可视化工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-Gitlab"><span class="nav-number">2.3.</span> <span class="nav-text">安装 Gitlab</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#同时使用Github和本地Gitlab"><span class="nav-number">2.4.</span> <span class="nav-text">同时使用Github和本地Gitlab</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#在-ssh-目录会生成gitlab-id-rsa和gitlab-id-rsa-pub私钥和公钥。我们将gitlab-id-rsa-pub中的内容粘帖到公司GitLab服务器的SSH-key的配置中。"><span class="nav-number"></span> <span class="nav-text">在~/.ssh/目录会生成gitlab_id-rsa和gitlab_id-rsa.pub私钥和公钥。我们将gitlab_id-rsa.pub中的内容粘帖到公司GitLab服务器的SSH-key的配置中。</span></a></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
