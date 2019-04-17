@@ -99,7 +99,7 @@
 <meta property="og:image" content="http://yoursite.com/2019/04/16/20190416/修改前.png">
 <meta property="og:image" content="http://yoursite.com/2019/04/16/20190416/修改后.png">
 <meta property="og:image" content="http://yoursite.com/2019/04/16/20190416/welcome.png">
-<meta property="og:updated_time" content="2019-04-17T08:04:54.259Z">
+<meta property="og:updated_time" content="2019-04-17T08:13:23.846Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker创建本地Gitlab并同时使用Github">
 <meta name="twitter:description" content="前情提要公司内部一直都是用svn。由于项目的加入新成员。代码质量不稳。但项目可能随时要更新。处于管理组员代码方便性考虑，由于公司暂时没考虑环git，暂时在公司内部搭建个gitlab项目组自用。">
@@ -428,8 +428,8 @@
 </li>
 </ul>
 <h3 id="同时使用Github和本地Gitlab"><a href="#同时使用Github和本地Gitlab" class="headerlink" title="同时使用Github和本地Gitlab"></a>同时使用Github和本地Gitlab</h3><ul>
-<li>生成密钥<h1 id="在-ssh-目录会生成gitlab-id-rsa和gitlab-id-rsa-pub私钥和公钥。我们将gitlab-id-rsa-pub中的内容粘帖到公司GitLab服务器的SSH-key的配置中。"><a href="#在-ssh-目录会生成gitlab-id-rsa和gitlab-id-rsa-pub私钥和公钥。我们将gitlab-id-rsa-pub中的内容粘帖到公司GitLab服务器的SSH-key的配置中。" class="headerlink" title="在~/.ssh/目录会生成gitlab_id-rsa和gitlab_id-rsa.pub私钥和公钥。我们将gitlab_id-rsa.pub中的内容粘帖到公司GitLab服务器的SSH-key的配置中。"></a>在~/.ssh/目录会生成gitlab_id-rsa和gitlab_id-rsa.pub私钥和公钥。我们将gitlab_id-rsa.pub中的内容粘帖到公司GitLab服务器的SSH-key的配置中。</h1><blockquote>
-<p>   $ ssh-keygen -t rsa -C “注册的gitlab邮箱” -f ~/.ssh/gitlab_id-rsa</p>
+<li>生成密钥<blockquote>
+<p>  在~/.ssh/目录会生成gitlab_id-rsa和gitlab_id-rsa.pub私钥和公钥。我们将gitlab_id-rsa.pub中的内容粘帖到公司GitLab服务器的SSH-key的配置中。<br>   $ ssh-keygen -t rsa -C “注册的gitlab邮箱” -f ~/.ssh/gitlab_id-rsa</p>
 </blockquote>
 </li>
 <li>添加config<blockquote>
@@ -668,7 +668,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前情提要"><span class="nav-number">1.</span> <span class="nav-text">前情提要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#步骤"><span class="nav-number">2.</span> <span class="nav-text">步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#搭建Docker环境"><span class="nav-number">2.1.</span> <span class="nav-text">搭建Docker环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-Portainer-–-docker可视化工具"><span class="nav-number">2.2.</span> <span class="nav-text">安装 Portainer – docker可视化工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-Gitlab"><span class="nav-number">2.3.</span> <span class="nav-text">安装 Gitlab</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#同时使用Github和本地Gitlab"><span class="nav-number">2.4.</span> <span class="nav-text">同时使用Github和本地Gitlab</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#在-ssh-目录会生成gitlab-id-rsa和gitlab-id-rsa-pub私钥和公钥。我们将gitlab-id-rsa-pub中的内容粘帖到公司GitLab服务器的SSH-key的配置中。"><span class="nav-number"></span> <span class="nav-text">在~/.ssh/目录会生成gitlab_id-rsa和gitlab_id-rsa.pub私钥和公钥。我们将gitlab_id-rsa.pub中的内容粘帖到公司GitLab服务器的SSH-key的配置中。</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前情提要"><span class="nav-number">1.</span> <span class="nav-text">前情提要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#步骤"><span class="nav-number">2.</span> <span class="nav-text">步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#搭建Docker环境"><span class="nav-number">2.1.</span> <span class="nav-text">搭建Docker环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-Portainer-–-docker可视化工具"><span class="nav-number">2.2.</span> <span class="nav-text">安装 Portainer – docker可视化工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-Gitlab"><span class="nav-number">2.3.</span> <span class="nav-text">安装 Gitlab</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#同时使用Github和本地Gitlab"><span class="nav-number">2.4.</span> <span class="nav-text">同时使用Github和本地Gitlab</span></a></li></ol></li></ol></div>
             
 
           </div>
