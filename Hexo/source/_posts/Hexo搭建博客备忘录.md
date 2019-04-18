@@ -21,13 +21,15 @@ description: 收集和整理如何利用Hexo搭建博客
 > [GIT简单用法指南](http://rogerdudler.github.io/git-guide/index.zh.html)
 
 ## (2)个人常用git命令总结
-* git init
-* git checkout -b branch//创建新的分支,branch为所起分支名
-* git add .
-* git commit -m "提交说明"
-* git remote add origin git@... github//仓库地址
-* git push -u origin master //所要提交的支干名
-* git clone -b branch git@.... //直接克隆分支
+```
+ git init
+ git checkout -b branch//创建新的分支,branch为所起分支名
+ git add .
+ git commit -m "提交说明"
+ git remote add origin git@... github//仓库地址
+ git push -u origin master //所要提交的支干名
+ git clone -b branch git@.... //直接克隆分支
+ ```
 
 ## (3)vscode使用git
 * 需要在环境path添加 例如D:\*\Git\cmd
@@ -46,11 +48,15 @@ description: 收集和整理如何利用Hexo搭建博客
 	2. 常见的是利用vpn翻墙出去，修改dns和host，在或者修改npm的源。
 	3. 而nrm就是用来切换源的。
 * 安装
+```
  npm install nrm -g
+```
 * 使用
+```
 nrm ls //查看可以使用的源
 nrm test //测试源的连接时间
 nrm use "源的名字" //切换到指定的源
+```
 * 使用
 gnvm 可以用于管理node版本
 
