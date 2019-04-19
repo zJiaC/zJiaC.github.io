@@ -135,6 +135,7 @@ font:
 # Value is the target link (E.g. GitHub: https://github.com/iissnan)
 social:
   GitHub: https://github.com/zjiac
+  唱吧: http://changba.com/u/79627497
   #LinkLabel: Link
 
 
@@ -269,7 +270,7 @@ custom_logo:
 # Available value:
 #    normal | night | night eighties | night blue | night bright
 # https://github.com/chriskempson/tomorrow-theme
-highlight_theme: normal
+highlight_theme: night
 
 
 # ---------------------------------------------------------------
@@ -527,7 +528,9 @@ vendors:
   # Internal version: 1.0.0
   # https://github.com/hustcc/canvas-nest.js
   canvas_nest:
-
+#开启点击效果
+# Fireworks
+fireworks: true
 
 
 # Assets
