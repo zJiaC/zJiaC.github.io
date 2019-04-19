@@ -99,7 +99,7 @@
 <meta property="og:image" content="http://yoursite.com/2019/04/16/20190416/修改前.png">
 <meta property="og:image" content="http://yoursite.com/2019/04/16/20190416/修改后.png">
 <meta property="og:image" content="http://yoursite.com/2019/04/16/20190416/welcome.png">
-<meta property="og:updated_time" content="2019-04-18T09:53:20.389Z">
+<meta property="og:updated_time" content="2019-04-19T01:30:26.982Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker创建本地Gitlab并同时使用Github">
 <meta name="twitter:description" content="前情提要公司内部一直都是用svn。由于项目的加入新成员。代码质量不稳。但项目可能随时要更新。处于管理组员代码方便性考虑，由于公司暂时没考虑环git，暂时在公司内部搭建个gitlab项目组自用。">
@@ -368,16 +368,16 @@
 </blockquote>
 <ul>
 <li><p>删除旧版本的 docker</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum remove docker docker-common docker-selinux docker-engine</div></pre></td></tr></table></figure>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum remove docker docker-common docker-selinux docker-engine</div></pre></td></tr></table></figure>
 </li>
 <li><p>增加 docker yum 源</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">yum install -y yum-utils device-mapper-persistent-data lvm2</div><div class="line">yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo</div><div class="line">yum-config-manager --enable docker-ce-edge</div><div class="line">yum-config-manager --enable docker-ce-test</div></pre></td></tr></table></figure>
 </li>
 <li><p>可直接下载Dokcer最新版</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install docker-ce</div></pre></td></tr></table></figure>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install docker-ce</div></pre></td></tr></table></figure>
 </li>
 <li><p>也可查看所有有效版本</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum list docker-ce --showduplicates | sort -r</div></pre></td></tr></table></figure>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum list docker-ce --showduplicates | sort -r</div></pre></td></tr></table></figure>
 </li>
 <li><p>自定义 docker 配置:graph 定义 docker 运行的目录， registry-mirrors 定义了 docker 获取镜像的仓库的地址。</p>
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">mkdir /etc/docker</div><div class="line">vi /etc/docker/daemon.json</div><div class="line"></div><div class="line">&#123;</div><div class="line">&quot;graph&quot;:&quot;/u1/docker&quot;,</div><div class="line">&quot;registry-mirrors&quot;: [&quot;http://hub-mirror.c.163.com&quot;]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -407,8 +407,7 @@
 </li>
 <li><p>查看磁盘空间大小,选择适合的持久化容器数据的存放位置。</p>
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">df -h</div></pre></td></tr></table></figure>
-  <img src="/2019/04/16/20190416/df-h.png" alt="df -h" title="df -h">
-</li>
+  <img src="/2019/04/16/20190416/df-h.png" alt="df -h" title="df -h"></li>
 <li><p>运行</p>
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">docker run \</div><div class="line">    --restart=always \</div><div class="line">    --publish 4443:443 --publish 8089:80 --publish 2222:22 \</div><div class="line">    --name gitlab \</div><div class="line">    --volume /u1/gitlab-ce/config:/etc/gitlab \</div><div class="line">    --volume /u1/gitlab-ce/logs:/var/log/gitlab \</div><div class="line">    --volume /u1/gitlab-ce/data:/var/opt/gitlab \</div><div class="line">    gitlab/gitlab-ce</div></pre></td></tr></table></figure>
 </li>
@@ -850,9 +849,74 @@
   
 
 
-<!-- 代码块复制功能 -->
-<script type="text/javascript" src="/js/src/clipboard.min.js"></script>  
-<script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+    <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
 
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+
+        if(result)$(this).text('复制成功')
+        else $(this).text('复制失败')
+
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
 </body>
 </html>

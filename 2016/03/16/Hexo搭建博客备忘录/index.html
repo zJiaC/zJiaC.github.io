@@ -94,7 +94,7 @@
 <meta property="og:url" content="http://yoursite.com/2016/03/16/Hexo搭建博客备忘录/index.html">
 <meta property="og:site_name" content="zJiaC">
 <meta property="og:description" content="收集和整理如何利用Hexo搭建博客">
-<meta property="og:updated_time" content="2019-03-29T05:47:06.483Z">
+<meta property="og:updated_time" content="2019-04-19T01:30:26.983Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo搭建博客备忘录">
 <meta name="twitter:description" content="收集和整理如何利用Hexo搭建博客">
@@ -358,15 +358,7 @@
 <p><a href="http://wiki.jikexueyuan.com/project/git-tutorial/remote-repository.html" target="_blank" rel="external">如何生成ssh</a></p>
 <p><a href="http://rogerdudler.github.io/git-guide/index.zh.html" target="_blank" rel="external">GIT简单用法指南</a></p>
 </blockquote>
-<h2 id="2-个人常用git命令总结"><a href="#2-个人常用git命令总结" class="headerlink" title="(2)个人常用git命令总结"></a>(2)个人常用git命令总结</h2><ul>
-<li>git init</li>
-<li>git checkout -b branch//创建新的分支,branch为所起分支名</li>
-<li>git add .</li>
-<li>git commit -m “提交说明”</li>
-<li>git remote add origin git@… github//仓库地址</li>
-<li>git push -u origin master //所要提交的支干名</li>
-<li>git clone -b branch git@…. //直接克隆分支</li>
-</ul>
+<h2 id="2-个人常用git命令总结"><a href="#2-个人常用git命令总结" class="headerlink" title="(2)个人常用git命令总结"></a>(2)个人常用git命令总结</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">git init</div><div class="line">git checkout -b branch//创建新的分支,branch为所起分支名</div><div class="line">git add .</div><div class="line">git commit -m &quot;提交说明&quot;</div><div class="line">git remote add origin git@... github//仓库地址</div><div class="line">git push -u origin master //所要提交的支干名</div><div class="line">git clone -b branch git@.... //直接克隆分支</div></pre></td></tr></table></figure>
 <h2 id="3-vscode使用git"><a href="#3-vscode使用git" class="headerlink" title="(3)vscode使用git"></a>(3)vscode使用git</h2><ul>
 <li>需要在环境path添加 例如D:*\Git\cmd</li>
 </ul>
@@ -384,9 +376,14 @@
 <li>而nrm就是用来切换源的。</li>
 </ol>
 </li>
-<li>安装<br>npm install nrm -g</li>
-<li>使用<br>nrm ls //查看可以使用的源<br>nrm test //测试源的连接时间<br>nrm use “源的名字” //切换到指定的源</li>
-<li>使用<br>gnvm 可以用于管理node版本</li>
+<li><p>安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install nrm -g</div></pre></td></tr></table></figure>
+</li>
+<li><p>使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">nrm ls //查看可以使用的源</div><div class="line">nrm test //测试源的连接时间</div><div class="line">nrm use &quot;源的名字&quot; //切换到指定的源</div></pre></td></tr></table></figure>
+</li>
+<li><p>使用<br>gnvm 可以用于管理node版本</p>
+</li>
 </ul>
 <h1 id="背景音乐"><a href="#背景音乐" class="headerlink" title="背景音乐:"></a>背景音乐:</h1><!--<embed src="http://music.163.com/style/swf/widget.swf?sid=27808044&type=2&auto=1&width=320&height=66" width="340" height="86"  allowNetworking="all"></embed>-->
 <!--<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=430 height=86 src="http://ksapuw.changba.com/userdata/userwork/29/869052029.mp3"></iframe>-->
@@ -806,9 +803,74 @@
   
 
 
-<!-- 代码块复制功能 -->
-<script type="text/javascript" src="/js/src/clipboard.min.js"></script>  
-<script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+    <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
 
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+
+        if(result)$(this).text('复制成功')
+        else $(this).text('复制失败')
+
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
 </body>
 </html>
