@@ -531,7 +531,9 @@ vendors:
 #开启点击效果
 # Fireworks
 fireworks: true
-
+# 设置文章末尾”本文结束”标记
+passage_end_tag:
+  enabled: true
 
 # Assets
 css: css

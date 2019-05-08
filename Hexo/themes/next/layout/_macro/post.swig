@@ -312,6 +312,12 @@
       {% endif  %}
     </div>
 
+    {% if not is_index %}
+      <div>
+        {% include 'passage-end-tag.swig' %}
+      </div>
+    {% endif %}
+
     <div>
       {% if not is_index %}
         {% include 'wechat-subscriber.swig' %}
